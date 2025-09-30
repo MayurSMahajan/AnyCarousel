@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CircularButton } from "./CircularButton";
 import { DEFAULT_DURATION, DEFAULT_EASING, DEFAULT_SCROLL_OFFSET, MAX_DURATION, MIN_DURATION } from "./constants/carousel";
 import { CarouselProps, Theme, ScrollSnapOptions, IconOptions } from "./carousel-props";
@@ -42,6 +42,17 @@ export const Carousel = (rawProps: CarouselProps) => {
       : DEFAULT_DURATION;
   }, [duration]);
 
+  // Memoize the custom easing function based on props for efficiency
+  const customScrollEasingFn = useMemo(() => {
+    const fallbackEasing = [0.25, 0.8, 0.5, 1];
+    const parsedEasing = scrollEasing?.match(/cubic-bezier\(([^)]+)\)/)?.[1];
+    const easingValues = parsedEasing?.split(',').map(Number);
+    const [x1, y1, x2, y2] = easingValues?.length === 4 ? easingValues : fallbackEasing;
+
+    // The bezier-easing library call
+    return bezierEasing(x1 ?? 0.25, y1 ?? 0.8, x2 ?? 0.5, y2 ?? 1);
+  }, [scrollEasing]);
+
   /**
    * Called when the content is scrolled. 
    * It handles the logic to show or hide left/right scroll icons.
@@ -63,17 +74,18 @@ export const Carousel = (rawProps: CarouselProps) => {
     setAutoScrollEnabled(false); // Stop auto-scrolling on user interaction
     if (!containerRef.current) return;
 
-    const fallbackEasing = [0.25, 0.8, 0.5, 1];
-    const parsedEasing = scrollEasing?.match(/cubic-bezier\(([^)]+)\)/)?.[1];
-    const easingValues = parsedEasing?.split(',').map(Number);
-
-    const [x1, y1, x2, y2] = easingValues?.length === 4 ? easingValues : fallbackEasing;
-    const easing = bezierEasing(x1 ?? 0.25, y1 ?? 0.8, x2 ?? 0.5, y2 ?? 1);
-
+    const easing = customScrollEasingFn;
     animateScrollBy(containerRef.current, (scrollOffset * direction), sanitizedDuration, easing);
   };
 
-  const animateScrollBy = (
+  /**
+   * Animates scrolling of the container by a specified offset over a given duration using an easing function.
+   * @param container - The scrollable container element
+   * @param offset - The distance to scroll (positive or negative)
+   * @param duration - Duration of the animation in milliseconds
+   * @param easingFn - Easing function to control the animation pace
+   */
+  const animateScrollBy = useCallback((
     container: HTMLDivElement,
     offset: number,
     duration: number,
@@ -92,7 +104,7 @@ export const Carousel = (rawProps: CarouselProps) => {
     };
 
     requestAnimationFrame(step);
-  };
+  }, []);
 
   useEffect(() => {
     handleScroll(); // initial check
@@ -104,15 +116,25 @@ export const Carousel = (rawProps: CarouselProps) => {
     const interval = Number(autoSlideInterval);
     if (isNaN(interval)) return;
 
+    // Use the memoized easing function
+    const easingFn = customScrollEasingFn;
+
     const intervalId = setInterval(() => {
-      containerRef.current?.scrollBy({ left: scrollOffset, behavior: "smooth" });
+      const container = containerRef.current;
+      if (container) {
+        // Check if we need to loop back to the start (simple carousel boundary check)
+        const isAtEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth - 1;
+        const targetOffset = isAtEnd ? -container.scrollWidth : scrollOffset;
+
+        animateScrollBy(container, targetOffset, sanitizedDuration, easingFn);
+      }
     }, interval);
 
     return () => clearInterval(intervalId);
-  }, [autoScrollEnabled, autoSlideInterval, scrollOffset]);
+  }, [autoScrollEnabled, autoSlideInterval, scrollOffset, sanitizedDuration, customScrollEasingFn]);
 
   return (
-    <div className="carousel-wrapper">
+    <div role="region" aria-label="Carousel" className="carousel-wrapper">
       {showLeft && (
         <CircularButton
           className="nav-button left"
@@ -120,6 +142,7 @@ export const Carousel = (rawProps: CarouselProps) => {
           icon={iconOptions.icon}
           style={iconOptions.iconStyles}
           theme={theme}
+          aria-label="Previous item"
         />
       )}
       <div
@@ -137,6 +160,7 @@ export const Carousel = (rawProps: CarouselProps) => {
           icon={iconOptions.icon}
           style={iconOptions.iconStyles}
           theme={theme}
+          aria-label="Next item"
         />
       )}
     </div>
