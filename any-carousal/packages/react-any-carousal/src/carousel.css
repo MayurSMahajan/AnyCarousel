@@ -14,8 +14,8 @@ html {
 .carousel-container {
   display: flex;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  /* scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; */
   gap: 1rem;
   padding-inline: 1rem; /* 👈 side gutters */
 
