@@ -1,5 +1,10 @@
 /* packages/react-any-carousel/src/react-any-carousel.css */
 
+/* Ensure native smooth scrolling is NOT active */
+html {
+  scroll-behavior: auto;
+}
+
 .carousel-wrapper {
   position: relative;
   display: flex;
@@ -9,16 +14,15 @@
 .carousel-container {
   display: flex;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  /* scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; */
   gap: 1rem;
   padding-inline: 1rem; /* 👈 side gutters */
-  
+
   /* hide the scrollbar */
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
   scrollbar-width: none;
-
 
   &::-webkit-scrollbar {
     display: none;
