@@ -1,102 +1,66 @@
-import Image, { type ImageProps } from "next/image";
-import { Button } from "@repo/ui/button";
-import styles from "./page.module.css";
 
-type Props = Omit<ImageProps, "src"> & {
-  srcLight: string;
-  srcDark: string;
-};
-
-const ThemeImage = (props: Props) => {
-  const { srcLight, srcDark, ...rest } = props;
-
-  return (
-    <>
-      <Image {...rest} src={srcLight} className="imgLight" />
-      <Image {...rest} src={srcDark} className="imgDark" />
-    </>
-  );
-};
+// import { Carousel } from "@any-carousal/react-any-carousel/carousel";
+// import { ChevronIcon } from "./components/ChevronIcon";
+// import { LargeImageComponent } from "./components/LargeImageComponent";
+// import { largeImageList } from "./data/largeImageList";
+// import { cubDataList } from "./data/cubDataList";
+// import { FaArrowLeft } from "react-icons/fa6";
+// import { CubInfoCard } from "./components/CubInfoCard";
+import { Playground } from "./components/Playground";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <ThemeImage
-          className={styles.logo}
-          srcLight="turborepo-dark.svg"
-          srcDark="turborepo-light.svg"
-          alt="Turborepo logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>apps/web/app/page.tsx</code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new/clone?demo-description=Learn+to+implement+a+monorepo+with+a+two+Next.js+sites+that+has+installed+three+local+packages.&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4K8ZISWAzJ8X1504ca0zmC%2F0b21a1c6246add355e55816278ef54bc%2FBasic.png&demo-title=Monorepo+with+Turborepo&demo-url=https%3A%2F%2Fexamples-basic-web.vercel.sh%2F&from=templates&project-name=Monorepo+with+Turborepo&repository-name=monorepo-turborepo&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fturborepo%2Ftree%2Fmain%2Fexamples%2Fbasic&root-directory=apps%2Fdocs&skippable-integrations=1&teamSlug=vercel&utm_source=create-turbo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://turbo.build/docs?utm_source"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-        <Button appName="web" className={styles.secondary}>
-          Open alert
-        </Button>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com/templates?search=turborepo&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://turbo.build?utm_source=create-turbo"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to turbo.build →
-        </a>
-      </footer>
+  return (
+    <div style={{ 'padding': 'clamp(1rem, 2vw, 4rem' }}>
+      <Playground></Playground>
     </div>
+    // <div className="p-16px">
+    //   <h1 className="text-3xl font-bold underline">AnyCarousal Example</h1>
+    //   <p className="text-base">To move the carousal: press the arrow buttons or slide with two fingers on your touch-pad or hold Shift key and scroll using MouseWheel.</p>
+    //   <Carousel
+    //     iconOptions={
+    //       {
+    //         icon: < ChevronIcon color="white" />,
+    //         iconStyles: {
+    //           "backgroundColor": "black",
+    //           "color": "white",
+    //         }
+    //       }
+    //     }
+    //     scrollOffset={1000}
+    //     autoSlideInterval={2000}
+    //     scrollEasing="cubic-bezier(0.79,0.14,0.15,0.86);"
+    //     duration={650}
+    //   >
+    //     {largeImageList.map((item, i) => (
+    //       <LargeImageComponent key={i} imageUrl={item.imageUrl} credit={item.credit}></LargeImageComponent>
+    //     ))}
+    //   </Carousel>
+    //   <hr style={{ 'margin': '5rem 0' }}></hr>
+    //   <h1 style={{ 'marginBottom': '1rem' }}>Carousal with Cards & Customised Nav Icons</h1>
+    //   <p style={{ 'marginBottom': '0.5rem' }}>Customise the scrollOffset property to scroll multiple items at a time, here `scrollOffset=4000`</p>
+    //   <p style={{ 'marginBottom': '0.5rem' }}>The iconOptions parameter accpets an instance of `HTMLElement` thus you can pass anything as `iconOptions.icon`, you can directly pass styles to `iconOptions.iconStyles` parameter</p>
+    //   <p style={{ 'marginBottom': '2rem' }}>In this example, we have not set the `autoSlideInterval` thus it is not scrolling automatically</p>
+    //   <Carousel scrollOffset={4000} iconOptions={{
+    //     icon: <FaArrowLeft style={{ scale: 0.8 }} />,
+    //     iconStyles: {
+    //       "backgroundColor": "#ffffff85",
+    //       "color": "black",
+    //       "scale": "0.8"
+    //     },
+    //   }}>
+    //     {cubDataList.map((cub, i) => (
+    //       <CubInfoCard
+    //         key={i}
+    //         species={cub.species}
+    //         heightAtBirth={cub.heightAtBirth}
+    //         funFact={cub.funFact}
+    //         weightAtBirth={cub.weightAtBirth}
+    //         imageUrl={cub.imageUrl}>
+    //       </CubInfoCard>
+    //     ))}
+    //   </Carousel>
+    //   <hr style={{ 'margin': '5rem 0' }}></hr>
+    // </div>
   );
 }
