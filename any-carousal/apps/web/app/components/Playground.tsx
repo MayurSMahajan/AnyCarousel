@@ -25,8 +25,8 @@ export const Playground: React.FC = () => {
     }
 
     return (
-        <div style={{ 'padding': '8px' }} className="flex flex-col md:flex-row gap-6">
-            <div style={{ 'padding': '8px' }} className="flex-1 bg-zinc-800 rounded shadow overflow-scroll">
+        <div className="flex flex-col md:flex-row gap-6 pd-8">
+            <div className="flex-1 bg-zinc-800 rounded shadow overflow-scroll pd-8">
                 <Carousel
                     iconOptions={{
                         icon: <ChevronIcon color="white" />,
@@ -45,7 +45,7 @@ export const Playground: React.FC = () => {
                     ))}
                 </Carousel>
             </div>
-            <div style={{ 'padding': '8px' }} className="flex-1 bg-zinc-800 rounded-2xl shadow flex flex-col gap-4">
+            <div className="flex-1 bg-zinc-800 rounded-2xl shadow flex flex-col gap-4 pd-8">
                 {/* Tabs */}
                 <div className="flex gap-6 border-b border-zinc-700">
                     <button className="text-white font-medium border-b-2 border-green-500 pb-2">Easings</button>

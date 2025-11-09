@@ -38,6 +38,22 @@ a {
   display: none;
 }
 
+.pd-2 {
+  padding: 2px;
+}
+
+.pd-4 {
+  padding: 4px;
+}
+
+.pd-8 {
+  padding: 8px;
+}
+
+.pd-16 {
+  padding: 16px;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -46,6 +62,7 @@ a {
   .imgLight {
     display: none;
   }
+
   .imgDark {
     display: unset;
   }
