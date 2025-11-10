@@ -5,6 +5,7 @@ import { easeInCurves, easeOutCurves, easeInOutCurves, PredefinedCurve } from ".
 import { largeImageList } from "../data/largeImageList";
 import { PlaygroundImageComponent } from "./PlaygroundImage";
 import { ChevronIcon } from "./ChevronIcon";
+import { CurveShowcaseTile } from "./CurveShowcaseTile";
 
 
 export const Playground: React.FC = () => {
@@ -12,11 +13,14 @@ export const Playground: React.FC = () => {
     const [y1, setY1] = useState(0.25);
     const [x2, setX2] = useState(0.5);
     const [y2, setY2] = useState(1);
-    const [selectedCurvesList, setSelectedCurvesList] = useState(easeInOutCurves);
+    //TODO: add tabs to switch between easeIn, easeOut, easeInOut
+    const [selectedCurvesList, setSelectedCurvesList] = useState(easeInOutCurves); // default to easeInOut
+    const [selectedCurve, setSelectedCurve] = useState<PredefinedCurve>(easeInOutCurves[0] as PredefinedCurve);
 
     function setCubicBezierFromOptions(curve: PredefinedCurve) {
         console.log(`updating curve to ${curve.name}`);
         console.log(`Before: x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${y2}`);
+        setSelectedCurve(curve);
         setX1(curve.points.x1);
         setY1(curve.points.y1);
         setX2(curve.points.x2);
@@ -26,7 +30,7 @@ export const Playground: React.FC = () => {
 
     return (
         <div className="flex flex-col md:flex-row gap-6 pd-8">
-            <div className="flex-1 bg-zinc-800 rounded shadow overflow-scroll pd-8">
+            <div className="flex-1 bg-zinc-800 rounded-lg shadow overflow-scroll pd-8">
                 <Carousel
                     iconOptions={{
                         icon: <ChevronIcon color="white" />,
@@ -45,7 +49,7 @@ export const Playground: React.FC = () => {
                     ))}
                 </Carousel>
             </div>
-            <div className="flex-1 bg-zinc-800 rounded-2xl shadow flex flex-col gap-4 pd-8">
+            <div className="flex-1 bg-zinc-800 rounded-lg shadow flex flex-col gap-4 pd-16">
                 {/* Tabs */}
                 <div className="flex gap-6 border-b border-zinc-700">
                     <button className="text-white font-medium border-b-2 border-green-500 pb-2">Easings</button>
@@ -53,11 +57,14 @@ export const Playground: React.FC = () => {
                 </div>
 
                 {/* Easing grid placeholder */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-4 gap-4">
                     {selectedCurvesList.map((cur, i) => (
-                        <div key={i} className="bg-zinc-900 rounded p-4 h-16 flex items-center justify-center" onClick={() => setCubicBezierFromOptions(cur)}>
-                            <span className="text-sm text-zinc-400">{cur.name}</span>
-                        </div>
+                        <CurveShowcaseTile
+                            key={i}
+                            curve={cur}
+                            isSelected={selectedCurve.name === cur.name} // highlight only the selected one
+                            onSelect={setCubicBezierFromOptions}        // notify parent
+                        />
                     ))}
                 </div>
 
