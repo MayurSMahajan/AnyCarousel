@@ -49,8 +49,13 @@ export const Carousel = (rawProps: CarouselProps) => {
     const easingValues = parsedEasing?.split(',').map(Number);
     const [x1, y1, x2, y2] = easingValues?.length === 4 ? easingValues : fallbackEasing;
 
-    // The bezier-easing library call
-    return bezierEasing(x1 ?? 0.25, y1 ?? 0.8, x2 ?? 0.5, y2 ?? 1);
+    try {
+      // The bezier-easing library call
+      return bezierEasing(x1 ?? 0.25, y1 ?? 0.8, x2 ?? 0.5, y2 ?? 1);
+    } catch (error) {
+      console.error("Invalid cubic-bezier values provided. Falling back to default easing.", error);
+      return bezierEasing(0.25, 0.8, 0.5, 1);
+    }
   }, [scrollEasing]);
 
   /**

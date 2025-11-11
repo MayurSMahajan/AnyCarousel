@@ -6,6 +6,7 @@ import { largeImageList } from "../data/largeImageList";
 import { PlaygroundImageComponent } from "./PlaygroundImage";
 import { ChevronIcon } from "./ChevronIcon";
 import { CurveShowcaseTile } from "./CurveShowcaseTile";
+import CurvePointInput from "./CurvePointInput";
 
 
 export const Playground: React.FC = () => {
@@ -70,16 +71,16 @@ export const Playground: React.FC = () => {
 
                 {/* Inputs */}
                 <div className="flex gap-2">
-                    <input className="bg-zinc-900 text-white p-2 rounded w-16" value={x1} onChange={(e) => setX1(Number(e.target.value))} />
-                    <input className="bg-zinc-900 text-white p-2 rounded w-16" value={y1} onChange={(e) => setY1(Number(e.target.value))} />
-                    <input className="bg-zinc-900 text-white p-2 rounded w-16" value={x2} onChange={(e) => setX2(Number(e.target.value))} />
-                    <input className="bg-zinc-900 text-white p-2 rounded w-16" value={y2} onChange={(e) => setY2(Number(e.target.value))} />
+                    <CurvePointInput value={x1} onChange={setX1} />
+                    <CurvePointInput value={y1} onChange={setY1} />
+                    <CurvePointInput value={x2} onChange={setX2} />
+                    <CurvePointInput value={y2} onChange={setY2} />
                 </div>
 
                 {/* Preview + copy */}
-                <div className="flex items-center justify-between bg-zinc-900 rounded p-2">
-                    <span className="text-sm text-zinc-400">{`cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`}</span>
-                    <button className="text-green-500 hover:text-green-400 text-sm">Copy</button>
+                <div className="flex items-center justify-between bg-zinc-900 rounded ">
+                    <span className="text-sm pd-8 text-zinc-400">{`cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`}</span>
+                    <button className="text-green-500 pd-8 hover:text-green-400 text-sm">Copy</button>
                 </div>
             </div>
         </div >
