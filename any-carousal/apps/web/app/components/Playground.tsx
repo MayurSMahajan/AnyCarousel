@@ -38,6 +38,19 @@ export const Playground: React.FC = () => {
         });
     }
 
+    const changeCurveType = (type: "easeIn" | "easeOut" | "easeInOut") => {
+        if (type === "easeIn") {
+            setSelectedCurvesList(easeInCurves);
+            setCubicBezierFromOptions(easeInCurves[0] as PredefinedCurve);
+        } else if (type === "easeOut") {
+            setSelectedCurvesList(easeOutCurves);
+            setCubicBezierFromOptions(easeOutCurves[0] as PredefinedCurve);
+        } else {
+            setSelectedCurvesList(easeInOutCurves);
+            setCubicBezierFromOptions(easeInOutCurves[0] as PredefinedCurve);
+        }
+    }
+
     return (
         <div className="flex flex-col md:flex-row gap-6 pd-8">
             <div className="flex-1 bg-zinc-800 rounded-lg shadow overflow-scroll pd-8">
@@ -65,6 +78,13 @@ export const Playground: React.FC = () => {
                     <button className="text-white font-medium border-b-2 border-green-500 pb-2">Easings</button>
                     <button className="text-zinc-400 hover:text-white pb-2">Icons</button>
                 </div>
+
+                {/* Easing type selector */}
+                <select className="bg-zinc-900 text-white pd-8 rounded w-1/5  outline-none" onChange={(e) => changeCurveType(e.target.value as "easeIn" | "easeOut" | "easeInOut")} >
+                    <option value="easeIn">Ease In</option>
+                    <option value="easeOut">Ease Out</option>
+                    <option value="easeInOut" selected>Ease In Out</option>
+                </select>
 
                 {/* Easing grid placeholder */}
                 <div className="grid grid-cols-4 gap-4">
