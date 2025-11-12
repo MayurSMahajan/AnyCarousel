@@ -16,9 +16,10 @@ export const Playground: React.FC = () => {
     const [y2, setY2] = useState(1);
     //TODO: add tabs to switch between easeIn, easeOut, easeInOut
     const [selectedCurvesList, setSelectedCurvesList] = useState(easeInOutCurves); // default to easeInOut
+    const [isCopied, setIsCopied] = useState(false);
     const [selectedCurve, setSelectedCurve] = useState<PredefinedCurve>(easeInOutCurves[0] as PredefinedCurve);
 
-    function setCubicBezierFromOptions(curve: PredefinedCurve) {
+    const setCubicBezierFromOptions = (curve: PredefinedCurve) => {
         console.log(`updating curve to ${curve.name}`);
         console.log(`Before: x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${y2}`);
         setSelectedCurve(curve);
@@ -27,6 +28,14 @@ export const Playground: React.FC = () => {
         setX2(curve.points.x2);
         setY2(curve.points.y2);
         console.log(`After: x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${y2}`);
+    }
+
+    const handleCopyToClipboard = () => {
+        const cubicBezierString = `cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`;
+        navigator.clipboard.writeText(cubicBezierString).then(() => {
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000); // reset after 2 seconds
+        });
     }
 
     return (
@@ -80,7 +89,7 @@ export const Playground: React.FC = () => {
                 {/* Preview + copy */}
                 <div className="flex items-center justify-between bg-zinc-900 rounded ">
                     <span className="text-sm pd-8 text-zinc-400">{`cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`}</span>
-                    <button className="text-green-500 pd-8 hover:text-green-400 text-sm">Copy</button>
+                    <button onClick={handleCopyToClipboard} className="text-green-500 pd-8 hover:text-green-400 cursor-pointer text-sm">{isCopied ? "Copied!" : "Copy"}</button>
                 </div>
             </div>
         </div >
