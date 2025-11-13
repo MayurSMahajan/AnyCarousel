@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "next dev --turbopack --port 3000",
     "build": "next build",
+    "export": "next export",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "deploy": "npm run build && npm run export && npx gh-pages -d out"
   },
   "dependencies": {
     "@repo/ui": "*",
