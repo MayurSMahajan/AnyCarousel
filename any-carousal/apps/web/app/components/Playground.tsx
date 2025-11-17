@@ -80,11 +80,15 @@ export const Playground: React.FC = () => {
                 </div>
 
                 {/* Easing type selector */}
-                <select className="bg-zinc-900 text-white pd-8 rounded w-1/5  outline-none" onChange={(e) => changeCurveType(e.target.value as "easeIn" | "easeOut" | "easeInOut")} >
-                    <option value="easeIn">Ease In</option>
-                    <option value="easeOut">Ease Out</option>
-                    <option value="easeInOut" selected>Ease In Out</option>
-                </select>
+                <div className="flex justify-end">
+                    <div className="flex justify-center pd-4 bg-zinc-900 rounded outline-none">
+                        <select id="curve-select" className="text-white outline-none" onChange={(e) => changeCurveType(e.target.value as "easeIn" | "easeOut" | "easeInOut")} >
+                            <option value="easeIn">Ease In</option>
+                            <option value="easeOut">Ease Out</option>
+                            <option value="easeInOut">Ease In Out</option>
+                        </select>
+                    </div>
+                </div>
 
                 {/* Easing grid placeholder */}
                 <div className="grid grid-cols-4 gap-4">
