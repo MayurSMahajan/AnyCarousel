@@ -16,9 +16,9 @@ export const HeroSection = () => {
             {/* CTA Button */}
             <a
                 href="#playground-section"
-                className="mt-8 primary-btn text-lg font-semibold rounded-xl"
+                className="primary-btn"
             >
-                Try in Playground
+                <span className="text-lg font-semibold">Try In Playground</span>
             </a>
 
         </section>
