@@ -52,8 +52,8 @@ export const Playground: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 pd-8">
-            <div className="flex-1 bg-zinc-800 rounded-lg shadow overflow-scroll pd-8">
+        <div className="flex flex-col md:flex-row gap-4 p-1">
+            <div className="flex-1 bg-zinc-800 rounded-lg shadow overflow-scroll p-4">
                 <Carousel
                     iconOptions={{
                         icon: <ChevronIcon color="white" />,
@@ -72,7 +72,7 @@ export const Playground: React.FC = () => {
                     ))}
                 </Carousel>
             </div>
-            <div className="flex-1 bg-zinc-800 rounded-lg shadow flex flex-col gap-4 pd-16">
+            <div className="flex-1 bg-zinc-800 rounded-lg shadow flex flex-col gap-4 p-4">
                 {/* Tabs */}
                 <div className="flex gap-6 border-b border-zinc-700">
                     <button className="text-white font-medium border-b-2 border-green-500 pb-2">Easings</button>
@@ -81,7 +81,7 @@ export const Playground: React.FC = () => {
 
                 {/* Easing type selector */}
                 <div className="flex justify-end">
-                    <div className="flex justify-center pd-4 bg-zinc-900 rounded outline-none">
+                    <div className="flex justify-center p-2 bg-zinc-900 rounded outline-none">
                         <select id="curve-select" className="text-white outline-none" onChange={(e) => changeCurveType(e.target.value as "easeIn" | "easeOut" | "easeInOut")} >
                             <option value="easeIn">Ease In</option>
                             <option value="easeOut">Ease Out</option>
@@ -112,8 +112,8 @@ export const Playground: React.FC = () => {
 
                 {/* Preview + copy */}
                 <div className="flex items-center justify-between bg-zinc-900 rounded ">
-                    <span className="text-sm pd-8 text-zinc-400">{`cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`}</span>
-                    <button onClick={handleCopyToClipboard} className="text-green-500 pd-8 hover:text-green-400 cursor-pointer text-sm">{isCopied ? "Copied!" : "Copy"}</button>
+                    <span className="text-sm p-4 text-zinc-400">{`cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`}</span>
+                    <button onClick={handleCopyToClipboard} className="text-green-500 p-4 hover:text-green-400 cursor-pointer text-sm">{isCopied ? "Copied!" : "Copy"}</button>
                 </div>
             </div>
         </div >

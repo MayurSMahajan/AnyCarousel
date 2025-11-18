@@ -9,7 +9,7 @@ export const PlaygroundSection = () => {
     return (
         <section id="playground-section" >
             <VSpace />
-            <div className="pd-8 w-full max-w-9/10 rounded-2xl bg-white/5 backdrop-blur border border-white/10 mx-auto">
+            <div className="p-8 w-full max-w-9/10 rounded-2xl bg-white/5 backdrop-blur border border-white/10 mx-auto">
                 <Playground />
             </div>
         </section>

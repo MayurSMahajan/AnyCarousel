@@ -37,24 +37,6 @@ a {
   display: none;
 }
 
-.pd-2 {
-  padding: 2px;
-}
-
-.pd-4 {
-  padding: 4px;
-}
-
-.pd-8 {
-  padding: 8px;
-}
-
-.pd-16 {
-  padding: 16px;
-}
-
-
-
 .primary-btn {
   background: var(--primary);
   color: var(--primary-foreground);

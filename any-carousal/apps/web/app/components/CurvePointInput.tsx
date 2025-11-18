@@ -50,7 +50,7 @@ const CurvePointInput: React.FC<CurvePointInputProps> = ({
                 step={step}
                 min={0}
                 max={1}
-                className={`bg-zinc-900 text-white pd-8 rounded ${width} text-center outline-none transition-all duration-300 ${isInvalid ? "border border-red-500" : "border border-transparent"}`}
+                className={`bg-zinc-900 text-white p-2 rounded ${width} text-center outline-none transition-all duration-300 ${isInvalid ? "border border-red-500" : "border border-transparent"}`}
             />
             {/* Tooltip (shown only when invalid) */}
             {isShowErrorTooltip && (
