@@ -1,11 +1,24 @@
 {
-  "name": "@any-carousal/react-any-carousel",
-  "version": "0.0.0",
-  "private": true,
+  "name": "react-any-carousel",
+  "version": "0.0.1-beta.1",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
-    "./*": "./src/*.tsx"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
+    "build": "tsup",
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit",
@@ -30,6 +43,7 @@
     "jest-environment-jsdom": "^30.0.0-beta.3",
     "react-test-renderer": "^19.1.0",
     "ts-jest": "^29.3.4",
+    "tsup": "^8.5.1",
     "typescript": "^5.8.2"
   },
   "dependencies": {
