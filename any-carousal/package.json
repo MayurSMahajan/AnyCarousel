@@ -1,5 +1,5 @@
 {
-  "name": "any-carousal",
+  "name": "any-carousel",
   "private": true,
   "scripts": {
     "build": "turbo run build",

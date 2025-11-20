@@ -1,5 +1,5 @@
 "use client";
-import { Carousel } from "@any-carousal/react-any-carousel/carousel";
+import { Carousel } from "react-any-carousel";
 import React, { useState } from "react";
 import { easeInCurves, easeOutCurves, easeInOutCurves, PredefinedCurve } from "../data/curves";
 import { largeImageList } from "../data/largeImageList";

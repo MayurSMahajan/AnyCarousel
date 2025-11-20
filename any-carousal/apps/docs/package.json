@@ -11,7 +11,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@any-carousal/react-any-carousel": "^0.0.0",
+    "react-any-carousel": "^0.0.1-beta.1",
     "@tailwindcss/postcss": "^4.1.11",
     "next": "^15.2.4",
     "postcss": "^8.5.6",
