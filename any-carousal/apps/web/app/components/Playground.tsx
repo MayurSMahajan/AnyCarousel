@@ -20,14 +20,11 @@ export const Playground: React.FC = () => {
     const [selectedCurve, setSelectedCurve] = useState<PredefinedCurve>(easeInOutCurves[0] as PredefinedCurve);
 
     const setCubicBezierFromOptions = (curve: PredefinedCurve) => {
-        console.log(`updating curve to ${curve.name}`);
-        console.log(`Before: x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${y2}`);
         setSelectedCurve(curve);
         setX1(curve.points.x1);
         setY1(curve.points.y1);
         setX2(curve.points.x2);
         setY2(curve.points.y2);
-        console.log(`After: x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${y2}`);
     }
 
     const handleCopyToClipboard = () => {
@@ -103,11 +100,11 @@ export const Playground: React.FC = () => {
                 </div>
 
                 {/* Inputs */}
-                <div className="flex gap-2">
-                    <CurvePointInput value={x1} onChange={setX1} />
-                    <CurvePointInput value={y1} onChange={setY1} />
-                    <CurvePointInput value={x2} onChange={setX2} />
-                    <CurvePointInput value={y2} onChange={setY2} />
+                <div className="flex gap-4">
+                    <CurvePointInput label="x1" value={x1} onChange={setX1} min={0} max={1} />
+                    <CurvePointInput label="y1" value={y1} onChange={setY1} min={-2} max={2} />
+                    <CurvePointInput label="x2" value={x2} onChange={setX2} min={0} max={1} />
+                    <CurvePointInput label="y2" value={y2} onChange={setY2} min={-2} max={2} />
                 </div>
 
                 {/* Preview + copy */}
