@@ -52,7 +52,7 @@ export const Playground: React.FC = () => {
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-1">
+        <div className="grid grid-cols-[2fr_35vw] gap-4 min-h-[560px]">
             <div className="bg-zinc-800 rounded-lg shadow overflow-scroll p-4">
                 <Carousel
                     iconOptions={{
