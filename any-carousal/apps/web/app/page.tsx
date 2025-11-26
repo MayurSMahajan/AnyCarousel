@@ -1,5 +1,6 @@
 import { FeaturesSection } from "./sections/FeaturesSection";
 import { HeroSection } from "./sections/HeroSection";
+import { InstallationSection } from "./sections/InstallationSection";
 import { PlaygroundSection } from "./sections/PlaygroundSection";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <HeroSection />
       <PlaygroundSection />
       <FeaturesSection />
+      <InstallationSection />
     </div>
   );
 }
