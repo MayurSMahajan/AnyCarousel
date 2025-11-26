@@ -52,8 +52,8 @@ export const Playground: React.FC = () => {
     }
 
     return (
-        <div className="grid grid-cols-[2fr_35vw] gap-4 min-h-[560px]">
-            <div className="bg-zinc-800 rounded-lg shadow overflow-scroll p-4">
+        <div className="grid grid-rows-1 md:grid-cols-[2fr_35vw] gap-4 min-h-[560px]">
+            <div className="bg-zinc-800 rounded-lg shadow overflow-scroll p-1 md:p-4">
                 <Carousel
                     iconOptions={{
                         icon: <ChevronIcon color="white" />,
@@ -109,7 +109,7 @@ export const Playground: React.FC = () => {
                         </div>
 
                         {/* Easing grid placeholder */}
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             {selectedCurvesList.map((cur, i) => (
                                 <CurveShowcaseTile
                                     key={i}
