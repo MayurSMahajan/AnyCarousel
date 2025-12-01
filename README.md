@@ -4,9 +4,9 @@ A highly customizable, smooth, and responsive carousel library designed to fit a
 
 ## Quick Links
 
-- **Package**: [react-any-carousel](./packages/react-any-carousal) - The core React component.
-- **Documentation**: [apps/docs](./apps/docs) - Detailed documentation and examples.
-- **Demo**: [apps/web](./apps/web) - A playground to test the carousel.
+- **Package**: [react-any-carousel](https://www.npmjs.com/package/react-any-carousel) - The core React component.
+- **Documentation**: [apps/docs](.any-carousal/apps/docs) - Detailed documentation and examples.
+- **Demo**: [apps/web](.any-carousal/apps/web) - A playground to test the carousel.
 
 ## Features
 
@@ -21,7 +21,8 @@ A highly customizable, smooth, and responsive carousel library designed to fit a
 
 ## Demo 
 
-https://github.com/user-attachments/assets/75484e1e-6676-419a-b5d1-b49bb4c6420d
+
+https://github.com/user-attachments/assets/94b6c64b-3b68-45e5-80dd-9ab515d1eee9
 
 ---
 
