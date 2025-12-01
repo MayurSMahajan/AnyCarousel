@@ -56,7 +56,7 @@ export const Playground: React.FC = () => {
     return (
         <div className="flex flex-col gap-4">
             <div className="grid grid-rows-1 md:grid-cols-[2fr_35vw] gap-4 min-h-[500px]">
-                <div className="bg-zinc-800 rounded-lg shadow overflow-scroll p-1 md:p-4">
+                <div className="bg-zinc-800 rounded-lg shadow overflow-hidden p-1 md:p-4">
                     <Carousel
                         iconOptions={{
                             icon: <ChevronIcon color="white" />,
@@ -80,19 +80,19 @@ export const Playground: React.FC = () => {
                     <div className="flex gap-6 border-b-2 border-zinc-700">
                         <button
                             onClick={() => setActiveTab("Easings")}
-                            className={`text-white cursor-pointer font-medium pb-2 ${activeTab === "Easings" ? "border-b-2 border-green-500" : "text-zinc-400 hover:text-white"}`}
+                            className={`text-white cursor-pointer font-medium pb-2 ${activeTab === "Easings" ? "border-b-2 border-[#facc15]" : "text-zinc-400 hover:text-white"}`}
                         >
                             Easings
                         </button>
                         <button
                             onClick={() => setActiveTab("Duration")}
-                            className={`text-white cursor-pointer font-medium pb-2 ${activeTab === "Duration" ? "border-b-2 border-green-500" : "text-zinc-400 hover:text-white"}`}
+                            className={`text-white cursor-pointer font-medium pb-2 ${activeTab === "Duration" ? "border-b-2 border-[#facc15]" : "text-zinc-400 hover:text-white"}`}
                         >
                             Duration
                         </button>
                         <button
                             onClick={() => setActiveTab("Icons*")}
-                            className={`text-white cursor-pointer font-medium pb-2 ${activeTab === "Icons*" ? "border-b-2 border-green-500" : "text-zinc-400 hover:text-white"}`}
+                            className={`text-white cursor-pointer font-medium pb-2 ${activeTab === "Icons*" ? "border-b-2 border-[#facc15]" : "text-zinc-400 hover:text-white"}`}
                         >
                             Icons*
                         </button>
@@ -134,7 +134,7 @@ export const Playground: React.FC = () => {
                             {/* Preview + copy */}
                             <div className="flex items-center justify-between bg-zinc-900 rounded ">
                                 <span className="text-sm p-4 text-zinc-400">{`cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`}</span>
-                                <button onClick={handleCopyToClipboard} className="text-green-500 p-4 hover:text-green-400 cursor-pointer text-sm">{isCopied ? "Copied!" : "Copy"}</button>
+                                <button onClick={handleCopyToClipboard} className="text-[#facc15] p-4 hover:text-amber-400 active:text-amber-400 cursor-pointer text-sm">{isCopied ? "Copied!" : "Copy"}</button>
                             </div>
                         </>
                     )}
