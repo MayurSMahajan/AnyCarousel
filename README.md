@@ -1,12 +1,12 @@
 # AnyCarousel - Lightweight Carousel for your components.
 
-A highly customizable, smooth, and responsive carousel library designed to fit any use-case — from simple sliders to advanced UX animations. Offers custom easing using beziers for content transitions. 
+AnyCarousel is a powerful, highly adaptable carousel component that covers real use cases like custom content, snapping, auto scroll, and responsive layout. It works for all kinds of content—images, videos, and custom components.
 
 ## Quick Links
 
-- **Package**: [react-any-carousel](https://www.npmjs.com/package/react-any-carousel) - The core React component.
-- **Documentation**: [apps/docs](.any-carousal/apps/docs) - Detailed documentation and examples.
-- **Demo**: [apps/web](.any-carousal/apps/web) - A playground to test the carousel.
+- **Package**: [react-any-carousel](./packages/react-any-carousal) - The core React component.
+- **Documentation**: [apps/docs](./apps/docs) - Detailed documentation and examples.
+- **Demo**: [apps/web](./apps/web) - A playground to test the carousel.
 
 ## Features
 
@@ -19,17 +19,6 @@ A highly customizable, smooth, and responsive carousel library designed to fit a
 - [x] Shift + Scroll Mouse Wheel supported for desktop devices.
 - [x] Two finger scroll gesture supported for devices with touchpads.
 
-## Demo 
-
-
-https://github.com/user-attachments/assets/94b6c64b-3b68-45e5-80dd-9ab515d1eee9
-
----
-
-https://github.com/user-attachments/assets/7d117cc2-bd13-4149-b0ba-612df1bf4c63
-
----
-
 ## Getting Started
 
 To use the carousel in your project, install the package:
@@ -39,6 +28,50 @@ npm install react-any-carousel
 ```
 
 See the [package README](./packages/react-any-carousal/README.md) for detailed usage instructions.
+
+## Customization
+
+### Custom Curves (Scroll Easing)
+
+You can customize the scroll animation curve using the `scrollEasing` prop. It accepts a standard CSS `transition-timing-function` string, such as a `cubic-bezier` value.
+
+```tsx
+<Carousel
+  duration={800}
+  scrollEasing="cubic-bezier(0.25, 1, 0.5, 1)" // Custom ease-out-quart-ish curve
+>
+  {/* items */}
+</Carousel>
+```
+
+Common curve values you might use:
+- **Linear**: `linear`
+- **Ease In**: `cubic-bezier(0.4, 0, 1, 1)`
+- **Ease Out**: `cubic-bezier(0, 0, 0.2, 1)`
+- **Ease In Out**: `cubic-bezier(0.4, 0, 0.2, 1)`
+
+### Custom Icons
+
+You can replace the default navigation icons with your own components using the `iconOptions` prop.
+
+```tsx
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // Example using react-icons
+
+<Carousel
+  iconOptions={{
+    icon: <FaArrowRight />, // Your custom icon component
+    iconStyles: {
+      color: "#FF5733",
+      fontSize: "2rem",
+      backgroundColor: "white",
+      borderRadius: "50%",
+      padding: "8px"
+    }
+  }}
+>
+  {/* items */}
+</Carousel>
+```
 
 ## Development
 
