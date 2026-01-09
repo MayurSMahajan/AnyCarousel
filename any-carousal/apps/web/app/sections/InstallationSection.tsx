@@ -43,7 +43,7 @@ const InstallCommand = ({ label, command }: { label: string; command: string }) 
 
 export const InstallationSection = () => {
     return (
-        <section id="installation-section" className="py-20 px-4 text-center">
+        <section id="installation-section" className="py-8 px-4 text-center">
             <h2 className="text-3xl font-bold text-white mb-8">Installation</h2>
             <div className="bg-zinc-900 rounded-lg p-6 max-w-xl mx-auto text-left overflow-x-auto border border-zinc-800 shadow-lg">
                 <div className="flex flex-col gap-4">

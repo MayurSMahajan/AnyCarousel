@@ -26,7 +26,7 @@ export const HeroSection = () => {
                     href="#installation-section"
                     className="bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-md transition-all flex items-center"
                 >
-                    <span className="text-lg font-semibold">Install</span>
+                    <span className="text-lg font-semibold">How to use? </span>
                 </a>
             </div>
 
