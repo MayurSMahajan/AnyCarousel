@@ -179,9 +179,9 @@ export const CarouselPlayground: React.FC<CarouselPlaygroundProps> = ({
                             <p className="text-zinc-400">This feature is available in the full playground.</p>
                             <button
                                 onClick={() => onLockedTabClick?.(activeTab)}
-                                className="px-4 py-2 bg-[#facc15] text-black font-semibold rounded hover:bg-amber-400 transition"
+                                className="primary-btn !mt-0"
                             >
-                                Open Full Playground →
+                                <span className="text-lg font-semibold">Open Full Playground →</span>
                             </button>
                         </div>
                     )}
