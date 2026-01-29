@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "../../packages/playground";
+
 
 :root {
   --background: #ffffff;
