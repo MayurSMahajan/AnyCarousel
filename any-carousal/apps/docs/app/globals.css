@@ -1,14 +1,20 @@
 @import "tailwindcss";
+@source "../../../packages/playground";
+
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #facc15;
+  --primary-foreground: #1a1a1a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #1a1a1a;
     --foreground: #ededed;
+    --primary: #fbbf24;
+    --primary-foreground: #0a0a0a;
   }
 }
 
@@ -35,6 +41,26 @@ a {
 
 .imgDark {
   display: none;
+}
+
+.primary-btn {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease-out;
+  margin-top: 2rem;
+  border-radius: 6px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.primary-btn:active,
+.primary-btn:focus {
+  transform: scale(0.97);
+}
+
+.primary-btn:hover {
+  opacity: 0.9;
 }
 
 @media (prefers-color-scheme: dark) {

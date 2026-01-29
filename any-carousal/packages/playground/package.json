@@ -1,0 +1,31 @@
+{
+  "name": "@repo/playground",
+  "version": "0.0.0",
+  "main": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "exports": {
+    ".": "./src/index.tsx"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "react-any-carousel": "*"
+  },
+  "dependencies": {
+    "react": "^19.2.1",
+    "react-any-carousel": "*",
+    "framer-motion": "^12.0.0"
+  }
+}

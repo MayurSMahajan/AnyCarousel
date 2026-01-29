@@ -1,25 +1,38 @@
 "use client";
 import { Carousel } from "react-any-carousel";
 import React, { useState } from "react";
-import { easeInCurves, easeOutCurves, easeInOutCurves, PredefinedCurve } from "../data/curves";
-import { largeImageList } from "../data/largeImageList";
-import { PlaygroundImageComponent } from "./PlaygroundImage";
-import { ChevronIcon } from "./ChevronIcon";
-import { CurveShowcaseTile } from "./CurveShowcaseTile";
-import CurvePointInput from "./CurvePointInput";
+import { easeInCurves, easeOutCurves, easeInOutCurves, PredefinedCurve } from "./data/curves";
+import { largeImageList } from "./data/largeImageList";
+import { PlaygroundImageComponent } from "./components/PlaygroundImage";
+import { ChevronIcon } from "./components/ChevronIcon";
+import { CurveShowcaseTile } from "./components/CurveShowcaseTile";
+import CurvePointInput from "./components/CurvePointInput";
+import { CodeSnippet } from "./components/CodeSnippet";
 
+export type PlaygroundTab = "easings" | "duration" | "icons";
+export type PlaygroundMode = "limited" | "full";
 
-import { CodeSnippet } from "./CodeSnippet";
+export interface CarouselPlaygroundProps {
+    mode?: PlaygroundMode;
+    enabledTabs?: PlaygroundTab[];
+    defaultTab?: PlaygroundTab;
+    onLockedTabClick?: (tab: PlaygroundTab) => void;
+}
 
-export const Playground: React.FC = () => {
+export const CarouselPlayground: React.FC<CarouselPlaygroundProps> = ({
+    mode = "full",
+    enabledTabs = ["easings", "duration", "icons"],
+    defaultTab = "easings",
+    onLockedTabClick
+}) => {
     const [x1, setX1] = useState(0.79);
     const [y1, setY1] = useState(0.25);
     const [x2, setX2] = useState(0.5);
     const [y2, setY2] = useState(1);
     const [duration, setDuration] = useState(650);
-    const [activeTab, setActiveTab] = useState<"Easings" | "Icons*" | "Duration">("Easings");
+    const [activeTab, setActiveTab] = useState<PlaygroundTab>(defaultTab);
 
-    //TODO: add tabs to switch between easeIn, easeOut, easeInOut
+    // Easing state
     const [selectedCurvesList, setSelectedCurvesList] = useState(easeInOutCurves); // default to easeInOut
     const [isCopied, setIsCopied] = useState(false);
     const [selectedCurve, setSelectedCurve] = useState<PredefinedCurve>(easeInOutCurves[0] as PredefinedCurve);
@@ -53,6 +66,14 @@ export const Playground: React.FC = () => {
         }
     }
 
+    const tabs: { id: PlaygroundTab, label: string }[] = [
+        { id: "easings", label: "Easings" },
+        { id: "duration", label: "Duration" },
+        { id: "icons", label: "Icons" }
+    ];
+
+    const isTabEnabled = (tab: PlaygroundTab) => enabledTabs.includes(tab);
+
     return (
         <div className="flex flex-col gap-4">
             <div className="grid grid-rows-1 md:grid-cols-[2fr_35vw] gap-4 min-h-[500px]">
@@ -78,27 +99,18 @@ export const Playground: React.FC = () => {
                 <div className="bg-zinc-800 rounded-lg shadow flex flex-col gap-4 p-4">
                     {/* Tabs */}
                     <div className="flex gap-6 border-b-2 border-zinc-700">
-                        <button
-                            onClick={() => setActiveTab("Easings")}
-                            className={`text-white cursor-pointer font-medium pb-2 ${activeTab === "Easings" ? "border-b-2 border-[#facc15]" : "text-zinc-400 hover:text-white"}`}
-                        >
-                            Easings
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("Duration")}
-                            className={`text-white cursor-pointer font-medium pb-2 ${activeTab === "Duration" ? "border-b-2 border-[#facc15]" : "text-zinc-400 hover:text-white"}`}
-                        >
-                            Duration
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("Icons*")}
-                            className={`text-white cursor-pointer font-medium pb-2 ${activeTab === "Icons*" ? "border-b-2 border-[#facc15]" : "text-zinc-400 hover:text-white"}`}
-                        >
-                            Icons*
-                        </button>
+                        {tabs.map(tab => (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`text-white cursor-pointer font-medium pb-2 ${activeTab === tab.id ? "border-b-2 border-[#facc15]" : "text-zinc-400 hover:text-white"}`}
+                            >
+                                {tab.label}{!isTabEnabled(tab.id) && "*"}
+                            </button>
+                        ))}
                     </div>
 
-                    {activeTab === "Easings" && (
+                    {activeTab === "easings" && isTabEnabled("easings") && (
                         <>
                             {/* Easing type selector */}
                             <div className="flex justify-end">
@@ -139,7 +151,7 @@ export const Playground: React.FC = () => {
                         </>
                     )}
 
-                    {activeTab === "Duration" && (
+                    {activeTab === "duration" && isTabEnabled("duration") && (
                         <div className="grid gap-4">
                             <div className="grid gap-2">
                                 <label className="text-zinc-400 text-sm">Transition Duration (ms)</label>
@@ -156,9 +168,21 @@ export const Playground: React.FC = () => {
                         </div>
                     )}
 
-                    {activeTab === "Icons*" && (
+                    {activeTab === "icons" && isTabEnabled("icons") && (
                         <div className="flex items-center justify-center h-40 text-zinc-500">
                             *Icon customization coming soon...
+                        </div>
+                    )}
+
+                    {!isTabEnabled(activeTab) && (
+                        <div className="flex flex-col items-center justify-center flex-1 h-full gap-4 text-center min-h-[200px]">
+                            <p className="text-zinc-400">This feature is available in the full playground.</p>
+                            <button
+                                onClick={() => onLockedTabClick?.(activeTab)}
+                                className="primary-btn !mt-0"
+                            >
+                                <span className="text-lg font-semibold">Open Full Playground →</span>
+                            </button>
                         </div>
                     )}
                 </div>

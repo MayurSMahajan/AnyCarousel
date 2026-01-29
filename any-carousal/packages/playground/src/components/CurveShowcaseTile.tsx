@@ -23,7 +23,7 @@ export const CurveShowcaseTile: React.FC<CurveShowcaseTileProps> = ({
     return (
         <button
             onClick={handleClick}
-            className={`bg-[#2b2a2a] max-w-[150px] md:max-w-full cursor-pointer rounded-xl flex items-center justify-center border-2 transition-all duration-200`}
+            className={`bg-[#2b2a2a] max-w-[150px] cursor-pointer rounded-xl flex items-center justify-center border-2 transition-all duration-200`}
             style={{
                 borderColor: isSelected ? "var(--primary)" : "#999"
             }}
