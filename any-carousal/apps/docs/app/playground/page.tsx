@@ -14,9 +14,9 @@ function PlaygroundPageContent() {
         : "easings";
 
     return (
-        <main className="min-h-screen bg-black text-white p-4 md:p-8">
-            <h1 className="text-3xl font-bold mb-8 text-center">Full Carousel Playground</h1>
-            <div className="max-w-7xl mx-auto border border-zinc-800 rounded-2xl p-4 md:p-8 bg-zinc-900/50">
+        <main className="min-h-screen bg-background text-foreground p-4 md:p-8">
+            <h1 className="text-3xl font-bold mb-8 text-center text-foreground">Full Carousel Playground</h1>
+            <div className="max-w-7xl mx-auto border border-border rounded-2xl p-4 md:p-8 bg-card/50">
                 <CarouselPlayground
                     mode="full"
                     enabledTabs={["easings", "duration", "icons"]}
@@ -29,7 +29,7 @@ function PlaygroundPageContent() {
 
 export default function PlaygroundPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen bg-black text-white flex items-center justify-center">Loading...</div>}>
+        <Suspense fallback={<div className="min-h-screen bg-background text-foreground flex items-center justify-center">Loading...</div>}>
             <PlaygroundPageContent />
         </Suspense>
     );
