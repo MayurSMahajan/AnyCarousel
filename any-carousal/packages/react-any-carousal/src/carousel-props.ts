@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 /**
  * Learn more about snapping here: https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type
@@ -18,7 +18,7 @@ export type Theme = "light" | "dark";
  */
 export type IconOptions = {
   icon?: ReactNode;
-  iconStyles?: any;
+  iconStyles?: CSSProperties;
 };
 
 export type CarouselProps = {
