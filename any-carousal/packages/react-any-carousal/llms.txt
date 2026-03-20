@@ -1,0 +1,70 @@
+# react-any-carousel
+
+> A lightweight, zero-dependency React carousel component. Supports auto-scroll, snap, touch/swipe, custom easing, custom icons, and any content type (images, videos, custom components).
+
+## Installation
+
+```bash
+npm install react-any-carousel
+```
+
+## Quick Start
+
+```tsx
+import { Carousel } from "react-any-carousel";
+
+<Carousel scrollSnapType="center" scrollOffset={300}>
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</Carousel>
+```
+
+## Props
+
+- `children` (ReactNode, required): Content to display.
+- `theme` ("light" | "dark", default "light"): Theme for nav icons.
+- `scrollSnapType` ("start" | "center" | "end" | "none", default "start"): Scroll snap alignment.
+- `scrollOffset` (number, default 1000): Pixels to scroll per click.
+- `autoSlideInterval` (number): Auto-scroll interval in ms.
+- `duration` (number, default 600): Scroll animation duration in ms.
+- `scrollEasing` (string): CSS cubic-bezier() for scroll animation.
+- `iconOptions` ({ icon?: ReactNode, iconStyles?: CSSProperties }): Custom nav icons.
+
+## Examples
+
+Image gallery:
+```tsx
+<Carousel scrollSnapType="center" scrollOffset={400}>
+  <img src="/photo-1.jpg" alt="Photo 1" style={{ width: 400 }} />
+  <img src="/photo-2.jpg" alt="Photo 2" style={{ width: 400 }} />
+</Carousel>
+```
+
+Auto-play:
+```tsx
+<Carousel autoSlideInterval={3000}>
+  <div>Slide 1</div>
+  <div>Slide 2</div>
+</Carousel>
+```
+
+Custom icons:
+```tsx
+<Carousel iconOptions={{ icon: <MyIcon />, iconStyles: { color: "red" } }}>
+  <div>Item 1</div>
+</Carousel>
+```
+
+Dark mode:
+```tsx
+<Carousel theme="dark" scrollSnapType="center" scrollOffset={300}>
+  <div>Dark 1</div>
+  <div>Dark 2</div>
+</Carousel>
+```
+
+## Docs
+
+- README: https://github.com/MayurSMahajan/AnyCarousel/blob/main/packages/react-any-carousal/README.md
+- npm: https://www.npmjs.com/package/react-any-carousel
