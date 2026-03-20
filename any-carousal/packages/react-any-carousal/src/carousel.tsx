@@ -29,9 +29,11 @@ export const Carousel = (rawProps: CarouselProps) => {
     autoSlideInterval,
     scrollEasing,
     duration,
+    onSlideChange,
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const currentIndexRef = useRef<number>(-1);
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(autoSlideInterval ? true : false);
@@ -60,7 +62,8 @@ export const Carousel = (rawProps: CarouselProps) => {
 
   /**
    * Called when the content is scrolled. 
-   * It handles the logic to show or hide left/right scroll icons.
+   * It handles the logic to show or hide left/right scroll icons
+   * and tracks the most visible slide for onSlideChange.
    */
   const handleScroll = () => {
     if (!containerRef.current) return;
@@ -68,6 +71,42 @@ export const Carousel = (rawProps: CarouselProps) => {
 
     setShowLeft(scrollLeft > 0);
     setShowRight(scrollLeft + clientWidth < scrollWidth - 1);
+
+    // Track the most visible child and fire onSlideChange if changed
+    if (onSlideChange) {
+      const index = getMostVisibleChildIndex(containerRef.current);
+      if (index !== -1 && index !== currentIndexRef.current) {
+        currentIndexRef.current = index;
+        onSlideChange(index);
+      }
+    }
+  };
+
+  /**
+   * Determines which direct child of the container is most visible in the viewport.
+   * Returns the zero-based index of that child, or -1 if no children exist.
+   */
+  const getMostVisibleChildIndex = (container: HTMLDivElement): number => {
+    const children = Array.from(container.children);
+    if (children.length === 0) return -1;
+
+    const containerRect = container.getBoundingClientRect();
+    let maxVisibleArea = 0;
+    let mostVisibleIndex = 0;
+
+    children.forEach((child, index) => {
+      const childRect = child.getBoundingClientRect();
+      const overlapLeft = Math.max(containerRect.left, childRect.left);
+      const overlapRight = Math.min(containerRect.right, childRect.right);
+      const visibleWidth = Math.max(0, overlapRight - overlapLeft);
+
+      if (visibleWidth > maxVisibleArea) {
+        maxVisibleArea = visibleWidth;
+        mostVisibleIndex = index;
+      }
+    });
+
+    return mostVisibleIndex;
   };
 
   /**

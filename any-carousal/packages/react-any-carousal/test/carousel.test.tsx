@@ -157,3 +157,102 @@ describe('Carousel AutoSlide', () => {
         clearIntervalSpy.mockRestore();
     });
 });
+
+describe('Carousel onSlideChange', () => {
+    it('fires onSlideChange on initial render with index 0', () => {
+        const handleSlideChange = jest.fn();
+        const { container } = render(
+            <Carousel onSlideChange={handleSlideChange}>
+                <div data-testid="slide" style={{ width: 300 }}>Slide 1</div>
+                <div data-testid="slide" style={{ width: 300 }}>Slide 2</div>
+                <div data-testid="slide" style={{ width: 300 }}>Slide 3</div>
+            </Carousel>
+        );
+
+        const carouselContainer = container.querySelector('.carousel-container') as HTMLElement;
+
+        // Mock getBoundingClientRect for the container and children
+        jest.spyOn(carouselContainer, 'getBoundingClientRect').mockReturnValue({
+            left: 0, right: 300, top: 0, bottom: 100, width: 300, height: 100, x: 0, y: 0, toJSON: () => {}
+        });
+
+        const children = carouselContainer.children;
+        jest.spyOn(children[0] as Element, 'getBoundingClientRect').mockReturnValue({
+            left: 0, right: 300, top: 0, bottom: 100, width: 300, height: 100, x: 0, y: 0, toJSON: () => {}
+        });
+        jest.spyOn(children[1] as Element, 'getBoundingClientRect').mockReturnValue({
+            left: 300, right: 600, top: 0, bottom: 100, width: 300, height: 100, x: 300, y: 0, toJSON: () => {}
+        });
+        jest.spyOn(children[2] as Element, 'getBoundingClientRect').mockReturnValue({
+            left: 600, right: 900, top: 0, bottom: 100, width: 300, height: 100, x: 600, y: 0, toJSON: () => {}
+        });
+
+        fireEvent.scroll(carouselContainer);
+
+        expect(handleSlideChange).toHaveBeenCalledWith(0);
+    });
+
+    it('fires onSlideChange with new index when scrolled to a different slide', () => {
+        const handleSlideChange = jest.fn();
+        const { container } = render(
+            <Carousel onSlideChange={handleSlideChange}>
+                <div data-testid="slide" style={{ width: 300 }}>Slide 1</div>
+                <div data-testid="slide" style={{ width: 300 }}>Slide 2</div>
+                <div data-testid="slide" style={{ width: 300 }}>Slide 3</div>
+            </Carousel>
+        );
+
+        const carouselContainer = container.querySelector('.carousel-container') as HTMLElement;
+        Object.defineProperty(carouselContainer, 'scrollWidth', { configurable: true, value: 900 });
+        Object.defineProperty(carouselContainer, 'clientWidth', { configurable: true, value: 300 });
+        let scrollLeft = 0;
+        Object.defineProperty(carouselContainer, 'scrollLeft', { configurable: true, get: () => scrollLeft, set: (v) => scrollLeft = v });
+
+        const children = carouselContainer.children;
+
+        // First scroll: slide 0 most visible
+        jest.spyOn(carouselContainer, 'getBoundingClientRect').mockReturnValue({
+            left: 0, right: 300, top: 0, bottom: 100, width: 300, height: 100, x: 0, y: 0, toJSON: () => {}
+        });
+        jest.spyOn(children[0] as Element, 'getBoundingClientRect').mockReturnValue({
+            left: 0, right: 300, top: 0, bottom: 100, width: 300, height: 100, x: 0, y: 0, toJSON: () => {}
+        });
+        jest.spyOn(children[1] as Element, 'getBoundingClientRect').mockReturnValue({
+            left: 300, right: 600, top: 0, bottom: 100, width: 300, height: 100, x: 300, y: 0, toJSON: () => {}
+        });
+        jest.spyOn(children[2] as Element, 'getBoundingClientRect').mockReturnValue({
+            left: 600, right: 900, top: 0, bottom: 100, width: 300, height: 100, x: 600, y: 0, toJSON: () => {}
+        });
+
+        fireEvent.scroll(carouselContainer);
+        expect(handleSlideChange).toHaveBeenCalledWith(0);
+
+        // Second scroll: simulate scrolled to slide 1
+        scrollLeft = 300;
+        (children[0] as Element).getBoundingClientRect = jest.fn().mockReturnValue({
+            left: -300, right: 0, top: 0, bottom: 100, width: 300, height: 100, x: -300, y: 0, toJSON: () => {}
+        });
+        (children[1] as Element).getBoundingClientRect = jest.fn().mockReturnValue({
+            left: 0, right: 300, top: 0, bottom: 100, width: 300, height: 100, x: 0, y: 0, toJSON: () => {}
+        });
+        (children[2] as Element).getBoundingClientRect = jest.fn().mockReturnValue({
+            left: 300, right: 600, top: 0, bottom: 100, width: 300, height: 100, x: 300, y: 0, toJSON: () => {}
+        });
+
+        fireEvent.scroll(carouselContainer);
+        expect(handleSlideChange).toHaveBeenCalledWith(1);
+        expect(handleSlideChange).toHaveBeenCalledTimes(2);
+    });
+
+    it('does not throw when onSlideChange is not provided', () => {
+        const { container } = render(
+            <Carousel>
+                <div data-testid="slide">Slide 1</div>
+                <div data-testid="slide">Slide 2</div>
+            </Carousel>
+        );
+
+        const carouselContainer = container.querySelector('.carousel-container') as HTMLElement;
+        expect(() => fireEvent.scroll(carouselContainer)).not.toThrow();
+    });
+});

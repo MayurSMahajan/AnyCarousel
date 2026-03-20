@@ -48,6 +48,7 @@ function App() {
 | `duration` | `number` | `600` | Scroll animation duration in ms (100–5000). |
 | `scrollEasing` | `string` | `"cubic-bezier(0.42, 0, 0.58, 1)"` | CSS timing function for scroll animation. |
 | `iconOptions` | `IconOptions` | Built-in chevron | Custom navigation icon and styles. |
+| `onSlideChange` | `(index: number) => void` | `undefined` | Callback fired when the most visible slide changes. |
 
 ### `IconOptions`
 
@@ -61,6 +62,25 @@ type IconOptions = {
 ---
 
 ## Recipes
+
+### Slide Change Tracking
+
+```tsx
+function App() {
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  return (
+    <>
+      <p>Current slide: {activeSlide}</p>
+      <Carousel onSlideChange={(index) => setActiveSlide(index)} scrollSnapType="center">
+        <div>Slide 0</div>
+        <div>Slide 1</div>
+        <div>Slide 2</div>
+      </Carousel>
+    </>
+  );
+}
+```
 
 ### Image Gallery
 

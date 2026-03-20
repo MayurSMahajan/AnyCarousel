@@ -30,6 +30,7 @@ import { Carousel } from "react-any-carousel";
 - `duration` (number, default 600): Scroll animation duration in ms.
 - `scrollEasing` (string): CSS cubic-bezier() for scroll animation.
 - `iconOptions` ({ icon?: ReactNode, iconStyles?: CSSProperties }): Custom nav icons.
+- `onSlideChange` ((index: number) => void): Callback fired when the most visible slide changes.
 
 ## Examples
 
@@ -61,6 +62,15 @@ Dark mode:
 <Carousel theme="dark" scrollSnapType="center" scrollOffset={300}>
   <div>Dark 1</div>
   <div>Dark 2</div>
+</Carousel>
+```
+
+Slide change tracking:
+```tsx
+const [active, setActive] = useState(0);
+<Carousel onSlideChange={(index) => setActive(index)}>
+  <div>Slide 0</div>
+  <div>Slide 1</div>
 </Carousel>
 ```
 

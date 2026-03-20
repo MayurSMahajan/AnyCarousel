@@ -77,4 +77,16 @@ export type CarouselProps = {
    * Defaults to `600`
    */
   duration?: number;
+
+  /**
+   * Callback fired when the most visible slide changes during scrolling.
+   * Receives the zero-based index of the slide that is most visible in the viewport.
+   *
+   * @example
+   * <Carousel onSlideChange={(index) => console.log('Active slide:', index)}>
+   *   <div>Slide 0</div>
+   *   <div>Slide 1</div>
+   * </Carousel>
+   */
+  onSlideChange?: (index: number) => void;
 };
