@@ -39,7 +39,7 @@ function ExampleBlock({
         <article className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-8">
             <h3 className="text-xl font-semibold text-white">{title}</h3>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-zinc-400">{description}</p>
-            <div className="mt-6">{children}</div>
+            <div className="mt-6 w-full min-w-0">{children}</div>
         </article>
     );
 }

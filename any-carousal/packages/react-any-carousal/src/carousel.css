@@ -9,9 +9,15 @@ html {
   position: relative;
   display: flex;
   align-items: center;
+  /* Fill the layout parent; nav buttons are absolutely positioned and out of flow */
+  width: 100%;
 }
 
 .carousel-container {
+  /* Consume full row width so the scrollport matches the card, not max-content of slides */
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
   display: flex;
   overflow-x: auto;
   /* scroll-snap-type: x mandatory;
