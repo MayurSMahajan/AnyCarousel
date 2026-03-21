@@ -47,3 +47,9 @@ html {
   right: 0.75rem;
   rotate: 180deg;
 }
+
+/* Default SVG chevron: block box avoids text baseline offset inside flex centering */
+.carousel-default-chevron {
+  display: block;
+  flex-shrink: 0;
+}

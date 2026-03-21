@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CircularButton } from "./CircularButton";
+import { DefaultNavChevron } from "./DefaultNavChevron";
 import { DEFAULT_DURATION, DEFAULT_EASING, DEFAULT_SCROLL_OFFSET, MAX_DURATION, MIN_DURATION } from "./constants/carousel";
 import { CarouselProps, Theme, ScrollSnapOptions, IconOptions } from "./carousel-props";
 import bezierEasing from 'bezier-easing';
@@ -9,7 +10,7 @@ import "./carousel.css";
 const defaultProps = {
   theme: "light" as Theme,
   iconOptions: {
-    icon: <span>&#8249;</span> as ReactNode,
+    icon: <DefaultNavChevron /> as ReactNode,
     iconStyles: { color: "whitesmoke", backgroundColor: "#333" },
   } as IconOptions,
   scrollSnapType: "start" as ScrollSnapOptions,
