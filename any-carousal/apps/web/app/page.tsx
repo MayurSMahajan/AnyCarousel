@@ -1,3 +1,4 @@
+import { CarouselExamplesSection } from "./sections/CarouselExamplesSection";
 import { FeaturesSection } from "./sections/FeaturesSection";
 import { HeroSection } from "./sections/HeroSection";
 import { InstallationSection } from "./sections/InstallationSection";
@@ -9,6 +10,7 @@ export default function Home() {
     <div className="bg-zinc-950">
       <HeroSection />
       <PlaygroundSection />
+      <CarouselExamplesSection />
       <FeaturesSection />
       <InstallationSection />
     </div>

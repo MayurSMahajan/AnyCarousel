@@ -28,6 +28,12 @@ export const HeroSection = () => {
                 >
                     <span className="text-lg font-semibold">How to use? </span>
                 </a>
+                <a
+                    href="#examples-section"
+                    className="text-zinc-300 hover:text-white px-6 py-3 rounded-md transition-colors flex items-center border border-white/15"
+                >
+                    <span className="text-lg font-semibold">View examples</span>
+                </a>
             </div>
 
             {/* Social Links */}
