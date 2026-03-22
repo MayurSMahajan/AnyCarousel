@@ -1,4 +1,13 @@
-import { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode, Ref } from "react";
+
+/**
+ * Imperative API exposed via the `ref` prop (React 19+).
+ * Use with `useRef<CarouselHandle>(null)` and optional `hideDefaultNavigation` for custom controls.
+ */
+export type CarouselHandle = {
+  scrollPrev: () => void;
+  scrollNext: () => void;
+};
 
 /**
  * Learn more about snapping here: https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type
@@ -22,6 +31,18 @@ export type IconOptions = {
 };
 
 export type CarouselProps = {
+  /**
+   * Ref to imperative navigation (`scrollPrev` / `scrollNext`).
+   * In React 19+, pass as a normal prop; same ergonomics as the historic `ref` attribute.
+   */
+  ref?: Ref<CarouselHandle | null>;
+
+  /**
+   * When true, the built-in previous/next circular buttons are not rendered.
+   * Use with `ref` to provide your own controls.
+   */
+  hideDefaultNavigation?: boolean;
+
   /**
    * Any iterable `ReactNode` element that the Carousel will display
    */

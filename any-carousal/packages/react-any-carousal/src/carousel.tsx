@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { CircularButton } from "./CircularButton";
 import { DefaultNavChevron } from "./DefaultNavChevron";
 import { DEFAULT_DURATION, DEFAULT_EASING, DEFAULT_SCROLL_OFFSET, MAX_DURATION, MIN_DURATION } from "./constants/carousel";
@@ -16,11 +16,13 @@ const defaultProps = {
   scrollSnapType: "start" as ScrollSnapOptions,
   scrollOffset: DEFAULT_SCROLL_OFFSET,
   scrollEasing: DEFAULT_EASING,
-  duration: DEFAULT_DURATION
+  duration: DEFAULT_DURATION,
+  hideDefaultNavigation: false,
 };
 
 export const Carousel = (rawProps: CarouselProps) => {
-  const props = useMemo(() => mergeProps(defaultProps, rawProps), [rawProps]);
+  const { ref, ...rest } = rawProps;
+  const props = useMemo(() => mergeProps(defaultProps, rest), [rest]);
   const {
     children,
     theme,
@@ -31,6 +33,7 @@ export const Carousel = (rawProps: CarouselProps) => {
     scrollEasing,
     duration,
     onSlideChange,
+    hideDefaultNavigation,
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -111,24 +114,7 @@ export const Carousel = (rawProps: CarouselProps) => {
   };
 
   /**
-   * Explicitly trigger scrolling on the carousel
-   * @param direction = `-1` denotes scrolling backwards, `1` denotes scrolling to forwards
-   * @returns 
-   */
-  const triggerScroll = (direction: number) => {
-    setAutoScrollEnabled(false); // Stop auto-scrolling on user interaction
-    if (!containerRef.current) return;
-
-    const easing = customScrollEasingFn;
-    animateScrollBy(containerRef.current, (scrollOffset * direction), sanitizedDuration, easing);
-  };
-
-  /**
    * Animates scrolling of the container by a specified offset over a given duration using an easing function.
-   * @param container - The scrollable container element
-   * @param offset - The distance to scroll (positive or negative)
-   * @param duration - Duration of the animation in milliseconds
-   * @param easingFn - Easing function to control the animation pace
    */
   const animateScrollBy = useCallback((
     container: HTMLDivElement,
@@ -150,6 +136,30 @@ export const Carousel = (rawProps: CarouselProps) => {
 
     requestAnimationFrame(step);
   }, []);
+
+  /**
+   * Explicitly trigger scrolling on the carousel
+   * @param direction = `-1` denotes scrolling backwards, `1` denotes scrolling to forwards
+   */
+  const triggerScroll = useCallback(
+    (direction: number) => {
+      setAutoScrollEnabled(false); // Stop auto-scrolling on user interaction
+      if (!containerRef.current) return;
+
+      const easing = customScrollEasingFn;
+      animateScrollBy(containerRef.current, scrollOffset * direction, sanitizedDuration, easing);
+    },
+    [scrollOffset, sanitizedDuration, customScrollEasingFn, animateScrollBy]
+  );
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      scrollPrev: () => triggerScroll(-1),
+      scrollNext: () => triggerScroll(1),
+    }),
+    [triggerScroll]
+  );
 
   useEffect(() => {
     handleScroll(); // initial check
@@ -176,11 +186,11 @@ export const Carousel = (rawProps: CarouselProps) => {
     }, interval);
 
     return () => clearInterval(intervalId);
-  }, [autoScrollEnabled, autoSlideInterval, scrollOffset, sanitizedDuration, customScrollEasingFn]);
+  }, [autoScrollEnabled, autoSlideInterval, scrollOffset, sanitizedDuration, customScrollEasingFn, animateScrollBy]);
 
   return (
     <div role="region" aria-label="Carousel" className="carousel-wrapper">
-      {showLeft && (
+      {!hideDefaultNavigation && showLeft && (
         <CircularButton
           className="nav-button left"
           onClick={() => triggerScroll(-1)}
@@ -198,7 +208,7 @@ export const Carousel = (rawProps: CarouselProps) => {
       >
         {children}
       </div>
-      {showRight && (
+      {!hideDefaultNavigation && showRight && (
         <CircularButton
           className="nav-button right"
           onClick={() => triggerScroll(1)}

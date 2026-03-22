@@ -1,5 +1,7 @@
 // test/Carousel.test.tsx
-import { fireEvent, render, screen } from '@testing-library/react';
+import { createRef } from 'react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import type { CarouselHandle } from '../src/carousel-props';
 import { Carousel } from '../src/carousel';
 
 describe('Carousel', () => {
@@ -33,6 +35,84 @@ describe('Carousel', () => {
         render(<Carousel><div data-testid="slide">Slide 1</div></Carousel>);
         const icons = screen.queryAllByTestId('nav-icon-btn');
         expect(icons.length).toBe(0);
+    });
+
+    it('does not render default nav buttons when hideDefaultNavigation is true', () => {
+        render(
+            <Carousel hideDefaultNavigation>
+                <div data-testid="slide">Slide 1</div>
+                <div data-testid="slide">Slide 2</div>
+            </Carousel>
+        );
+        expect(screen.queryAllByTestId('nav-icon-btn').length).toBe(0);
+    });
+});
+
+describe('Carousel imperative ref', () => {
+    it('exposes scrollNext that triggers scroll animation', () => {
+        jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
+            setTimeout(() => cb(Date.now()), 16);
+            return 0;
+        });
+
+        const ref = createRef<CarouselHandle>();
+        const { container } = render(
+            <Carousel ref={ref} scrollOffset={100}>
+                <div data-testid="slide">Slide 1</div>
+                <div data-testid="slide">Slide 2</div>
+            </Carousel>
+        );
+
+        const carouselContainer = container.querySelector('.carousel-container') as HTMLElement;
+        Object.defineProperty(carouselContainer, 'scrollWidth', { configurable: true, value: 1000 });
+        Object.defineProperty(carouselContainer, 'clientWidth', { configurable: true, value: 300 });
+        let currentScrollLeft = 0;
+        Object.defineProperty(carouselContainer, 'scrollLeft', {
+            configurable: true,
+            get: () => currentScrollLeft,
+            set: (val) => { currentScrollLeft = val; },
+        });
+
+        expect(ref.current).not.toBeNull();
+        act(() => {
+            ref.current!.scrollNext();
+        });
+        expect(window.requestAnimationFrame).toHaveBeenCalled();
+
+        (window.requestAnimationFrame as jest.Mock).mockRestore();
+    });
+
+    it('exposes scrollPrev that triggers scroll animation', () => {
+        jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
+            setTimeout(() => cb(Date.now()), 16);
+            return 0;
+        });
+
+        const ref = createRef<CarouselHandle>();
+        const { container } = render(
+            <Carousel ref={ref} scrollOffset={100}>
+                <div data-testid="slide">Slide 1</div>
+                <div data-testid="slide">Slide 2</div>
+            </Carousel>
+        );
+
+        const carouselContainer = container.querySelector('.carousel-container') as HTMLElement;
+        Object.defineProperty(carouselContainer, 'scrollWidth', { configurable: true, value: 1000 });
+        Object.defineProperty(carouselContainer, 'clientWidth', { configurable: true, value: 300 });
+        let currentScrollLeft = 200;
+        Object.defineProperty(carouselContainer, 'scrollLeft', {
+            configurable: true,
+            get: () => currentScrollLeft,
+            set: (val) => { currentScrollLeft = val; },
+        });
+
+        expect(ref.current).not.toBeNull();
+        act(() => {
+            ref.current!.scrollPrev();
+        });
+        expect(window.requestAnimationFrame).toHaveBeenCalled();
+
+        (window.requestAnimationFrame as jest.Mock).mockRestore();
     });
 });
 
