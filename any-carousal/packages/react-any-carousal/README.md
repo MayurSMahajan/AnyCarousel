@@ -40,6 +40,8 @@ function App() {
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
+| `ref` | `Ref<CarouselHandle \| null>` | `undefined` | Imperative API: `scrollPrev()` / `scrollNext()`. In React 19+, pass as a normal prop (same as the `ref` attribute). |
+| `hideDefaultNavigation` | `boolean` | `false` | When `true`, built-in previous/next buttons are not rendered. Use with `ref` for fully custom controls. |
 | `children` | `ReactNode` | **Required** | Content to display in the carousel. |
 | `theme` | `"light" \| "dark"` | `"light"` | Sets the theme (affects icon background/colors). |
 | `scrollSnapType` | `"start" \| "center" \| "end" \| "none"` | `"start"` | CSS scroll-snap alignment for children. |
@@ -59,9 +61,49 @@ type IconOptions = {
 };
 ```
 
+### `CarouselHandle`
+
+```ts
+import type { CarouselHandle } from "react-any-carousel";
+
+type CarouselHandle = {
+  scrollPrev: () => void;
+  scrollNext: () => void;
+};
+```
+
 ---
 
 ## Recipes
+
+### Custom navigation (imperative `ref`)
+
+Use a ref to drive the same scroll behavior as the default buttons. Set `hideDefaultNavigation` when you render your own controls.
+
+```tsx
+import { useRef } from "react";
+import { Carousel, type CarouselHandle } from "react-any-carousel";
+
+function App() {
+  const carouselRef = useRef<CarouselHandle>(null);
+
+  return (
+    <>
+      <button type="button" onClick={() => carouselRef.current?.scrollPrev()}>
+        Previous
+      </button>
+      <button type="button" onClick={() => carouselRef.current?.scrollNext()}>
+        Next
+      </button>
+      <Carousel ref={carouselRef} hideDefaultNavigation scrollOffset={320}>
+        <div>Slide 1</div>
+        <div>Slide 2</div>
+        <div>Slide 3</div>
+      </Carousel>
+    </>
+  );
+}
+```
 
 ### Slide Change Tracking
 

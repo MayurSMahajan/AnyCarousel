@@ -22,6 +22,9 @@ import { Carousel } from "react-any-carousel";
 
 ## Props
 
+- `ref` (Ref<CarouselHandle | null>): Imperative `scrollPrev()` / `scrollNext()`. React 19+: pass as a normal prop.
+- `hideDefaultNavigation` (boolean, default false): Hide built-in nav buttons; pair with `ref` for custom controls.
+- `CarouselHandle`: `{ scrollPrev(): void; scrollNext(): void }` — import as `import type { CarouselHandle } from "react-any-carousel"`.
 - `children` (ReactNode, required): Content to display.
 - `theme` ("light" | "dark", default "light"): Theme for nav icons.
 - `scrollSnapType` ("start" | "center" | "end" | "none", default "start"): Scroll snap alignment.
@@ -72,6 +75,16 @@ const [active, setActive] = useState(0);
   <div>Slide 0</div>
   <div>Slide 1</div>
 </Carousel>
+```
+
+Imperative navigation (React 19 ref prop):
+```tsx
+const ref = useRef<CarouselHandle>(null);
+<Carousel ref={ref} hideDefaultNavigation scrollOffset={300}>
+  <div>1</div>
+  <div>2</div>
+</Carousel>
+<button type="button" onClick={() => ref.current?.scrollNext()}>Next</button>
 ```
 
 ## Docs
