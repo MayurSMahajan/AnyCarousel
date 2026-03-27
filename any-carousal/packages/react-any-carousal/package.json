@@ -1,10 +1,10 @@
 {
   "name": "react-any-carousel",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "description": "A lightweight, zero-dependency carousel for React. Supports auto-scroll, snap, touch/swipe, custom icons, and any content type.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MayurSMahajan/AnyCarousel"
+    "url": "git+https://github.com/MayurSMahajan/AnyCarousel.git"
   },
   "homepage": "https://any-carousel.vercel.app",
   "keywords": [
@@ -21,7 +21,9 @@
     "react-carousel",
     "content-carousel"
   ],
-  "sideEffects": ["**/*.css"],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
